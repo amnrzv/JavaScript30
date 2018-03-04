@@ -58,16 +58,51 @@
 
     .hand {
       width:50%;
-      height:6px;
+      height:2px;
       background:black;
       position: absolute;
-      top:50%;
+      top:calc(50% - 1px);
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition-timing-function: cubic-bezier(0, 1.21, 0.51, 1.03);
+    }
+
+    .hour-hand {
+      width:35%;
+      height:6px;
+      left:15%;
+      top:calc(50% - 3px);
+    }
+
+    .min-hand {
+      width:45%;
+      height:4px;
+      left:5%;
+      top:calc(50% - 2px);
     }
 
   </style>
 
   <script>
+    const hoursHand = document.querySelector(`.hour-hand`);
+    const minsHand = document.querySelector(`.min-hand`);
+    const secondsHand = document.querySelector(`.second-hand`);
 
+    function setDate() {
+      const now = new Date();
+      const hours = now.getHours();
+      const mins = now.getMinutes();
+      const seconds = now.getSeconds();
+      const hoursDegrees = (hours/12) * 360 + (mins/60) * 360/12 + 90;    //adding mins angles as well.. to avoid the hour hand jumping each hour
+      const minsDegrees = (mins/60) * 360 + (seconds/60) * 360/60 + 90;   //adding seconds angles as well.. to avoid the hour hand jumping each minute
+      const secondsDegrees = (seconds/60) * 360 + 90;
+      
+      hoursHand.style.transform = `rotate(${hoursDegrees}deg)`;
+      minsHand.style.transform = `rotate(${minsDegrees}deg)`;
+      secondsHand.style.transform = `rotate(${secondsDegrees}deg)`;
+    }
+
+    setInterval(setDate, 1000);
 
   </script>
 </body>
