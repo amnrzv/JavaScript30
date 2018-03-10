@@ -8,7 +8,7 @@
 <body>
 
   <form class="search-form">
-    <input type="text" class="search" placeholder="City or State">
+    <input type="text" class="search" placeholder="City or State" autofocus>
     <ul class="suggestions">
       <li>Filter for a city</li>
       <li>or a state</li>
@@ -17,6 +17,79 @@
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
+cities = [];
+
+fetch(endpoint)
+    .then(blob => blob.json())
+    .then(data => cities.push(...data));
+
+const searchBox = document.querySelector(".search");
+const searchForm = document.querySelector(".search-form");
+const suggestions = document.querySelector("form .suggestions");
+
+searchBox.addEventListener('keyup', displayList);
+
+function displayList(e) {
+  e.preventDefault();
+  if (this.value.length > 0) {
+    const matchArray = searchList(this.value, cities);
+    const html = matchArray.map(c => {
+      const fullSearchText = `${c.city}, ${c.state}`;
+      const indices = getMatchIndices(fullSearchText, this.value);
+      const highlightedText = highlightLetters(fullSearchText, indices);
+
+      return (
+       `<li>
+        <span class="name">
+          ${highlightedText}
+        </span>
+        </li>`)
+      })
+      .join('');
+    
+    suggestions.innerHTML = html;
+  }
+  else suggestions.innerHTML = "";
+}
+
+function getMatchIndices(text, searchText) {
+  let indices = [];
+  let positionCounter = -1;
+
+  searchText.split('')
+                .forEach( e => {
+                    index = text.toLowerCase().indexOf(e.toLowerCase(), positionCounter);
+                    if (index >= 0) {
+                      indices.push(index);
+                      positionCounter = index + 1;
+                    }
+                  }
+                );
+
+  return indices;
+}
+
+function highlightLetters(text, indices)
+{
+  function highlightAtIndex(text, index, replacementStart, replacementEnd) {
+    return text.substr(0, index) + replacementStart + text[index] + replacementEnd + text.substr(index + 1, text.length - 1);
+  }
+
+  indices.reverse();
+  indices.forEach(
+    index => text = highlightAtIndex(text, index, `<span class="hl">`, `</span>`)
+  );
+  return text;
+}
+
+function searchList(wordToSearch, cities) {
+  const regex = new RegExp(wordToSearch.split('').join(`.*`), 'gi');
+  return cities.filter(c => {
+    const fullSearchText = `${c.city}, ${c.state}`;
+    return fullSearchText.match(regex);
+  });
+}
 </script>
   </body>
 </html>
+          
