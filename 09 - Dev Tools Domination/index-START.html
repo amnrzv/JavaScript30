@@ -10,36 +10,69 @@
 
   <script>
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
-
+    
     function makeGreen() {
       const p = document.querySelector('p');
       p.style.color = '#BADA55';
       p.style.fontSize = '50px';
     }
 
+    const p = document.querySelector('p');
+
     // Regular
+    console.log("woooshhh");
 
     // Interpolated
+    console.log("this is a %s string", "interpolated");
 
     // Styled
+    console.log("%cthis is a styled string", "color:magenta; font-size:16px");
 
     // warning!
+    console.warn("This is a warning");
 
     // Error :|
+    console.error("and this shows up as an error");
 
     // Info
+    console.info("you can have info as well");
 
     // Testing
+    console.assert(dogs.length >= 3, "the dogs array doesn't have more than 2 dogs");
 
     // clearing
+    console.clear();
 
     // Viewing DOM Elements
+    console.log(p);
+    console.dir(p);
 
     // Grouping together
+    dogs.forEach(
+      (dog) => {
+        console.groupCollapsed(dog.name);
+        console.log(`doggy's name is ${dog.name}`);
+        console.log(`and doggy is ${dog.age} years old`);
+        console.groupEnd(dog.name);
+      }
+    )
 
     // counting
+    console.count("AMAAN");
+    console.count("AMAAN");
+    console.count("AMAAN");
+    console.count("AMAAN");
+    console.count("AMAAN");
+    console.count("AMAAN");
 
     // timing
+    console.time("test");
+    
+    for (let i = 0; i < 1000; i++) {
+      x = 2;
+    }
+    
+    console.timeEnd("test");
 
   </script>
 </body>
