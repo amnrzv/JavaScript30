@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Videos</title>
 </head>
+
 <body>
   <ul class="videos">
     <li data-time="5:43">
@@ -177,11 +179,28 @@
     <li data-time="1:56">
       Video 57
     </li>
-    <li data-time="4:04">
+    <li data-time="6:06">
       Video 58
     </li>
   </ul>
-<script>
-</script>
+  <script>
+    listItems = document.querySelectorAll('li');
+    listArray = [...listItems];
+    const totalTime = listArray.reduce((total, item) => {
+      const [minute, seconds] = item.dataset.time.split(':').map(parseFloat);
+      return total += minute * 60 + seconds;
+    }, 0);
+
+    const totalSecs = totalTime % 60;
+    let totalMins = Math.floor(totalTime / 60);
+    let totalHrs = 0;
+    if (totalMins >= 60) {
+      totalHrs = Math.floor(totalMins / 60);
+      totalMins = Math.floor(totalMins % 60);
+    }
+
+    console.log(`${totalHrs}:${totalMins}:${totalSecs}`);
+  </script>
 </body>
+
 </html>

@@ -35,6 +35,31 @@
   </style>
 
 <script>
+  const hero = document.querySelector('.hero');
+  const h1 = hero.querySelector('h1');
+  const maxOffset = 120;
+  const shadowColor = 'rgba(150, 50, 120, 0.4)';
+  h1.style.textShadow = `0px 0px 0px ${shadowColor}`;
+
+  hero.addEventListener('mousemove', moveShadow);
+
+  function moveShadow(e) {
+    const {offsetWidth : width, offsetHeight : height} = hero;
+    let {offsetX : x, offsetY : y} = e;
+
+    if (this !== e.target) {
+      x = x + e.target.offsetLeft;
+      y = y + e.target.offsetTop;
+    }
+
+    const xWalk = Math.round((x/width * maxOffset) - (maxOffset/2));
+    const yWalk = Math.round((y/height * maxOffset) - (maxOffset/2));
+    const blur = (Math.abs(xWalk) + Math.abs(yWalk))/(maxOffset) * 40;
+    console.log(xWalk, yWalk);
+
+    h1.style.textShadow = `${-xWalk}px ${-yWalk}px ${blur}px ${shadowColor}`;
+  }
+
 </script>
 </body>
 </html>

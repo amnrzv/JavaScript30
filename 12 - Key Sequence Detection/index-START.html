@@ -7,6 +7,18 @@
 </head>
 <body>
 <script>
+  const keys = [];
+  const matchWord = 'amaan';
+  window.addEventListener('keyup', (e) => {
+    keys.push(e.key);
+    keys.splice(-matchWord.length - 1, keys.length - matchWord.length);
+    console.log(keys);
+    
+    if (keys.join('').includes(matchWord)) {
+      cornify_add();
+      console.log("tada");
+    }
+  })
 </script>
 </body>
 </html>

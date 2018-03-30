@@ -99,9 +99,9 @@ body {
 
 .progress__filled {
   width:50%;
-  background:#ffc600;
+  background:#ad0a04;
   flex:0;
-  flex-basis:50%;
+  flex-basis:0%;
 }
 
 /* unholy css to style input type="range" */
@@ -148,7 +148,7 @@ input[type=range]::-moz-range-track {
 }
 input[type=range]::-moz-range-thumb {
   box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(13, 13, 13, 0);
-  height: 15px;
+  height: 5px;
   width: 15px;
   border-radius: 50px;
   background: #ffc600;
